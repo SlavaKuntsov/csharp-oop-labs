@@ -33,6 +33,11 @@ namespace _1
                         ReturnToMenu();
                         break;
 
+
+
+                    case "x":
+                        Environment.Exit(0);
+                        break;
                     default:
                         Console.WriteLine("    Выбран неверный номер");
                         ReturnToMenu();
@@ -47,6 +52,8 @@ namespace _1
             Console.WriteLine("    1. Типы");
             Console.WriteLine("    2. Строки");
             Console.WriteLine("    3. Массивы");
+
+            Console.WriteLine("    x. Выйти");
 
             Console.Write("\n    Ваш выбор: ");
 
