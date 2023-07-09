@@ -23,16 +23,32 @@ namespace _1
                         ReturnToMenu();
                         break;
                     case "2":
-                        StringsLab newStrings = new();
+                        Strings newStrings = new();
                         newStrings.Main();
                         ReturnToMenu();
                         break;
                     case "3":
-                        ArraysLab newArrays = new();
+                        Arrays newArrays = new();
                         newArrays.Main();
                         ReturnToMenu();
                         break;
+                    case "4":
+                        Tuples newTuples = new();
+                        newTuples.Main();
+                        ReturnToMenu();
+                        break;
+                    case "5":
+                        int[] numbersArray = { 1, 25334, 3 };
+                        string letter = "New string";
 
+                        Calculate(numbersArray, letter);
+
+                        ReturnToMenu();
+                        break;
+                    case "6":
+                        Console.WriteLine("checked/unchecked");
+                        ReturnToMenu();
+                        break;
 
 
                     case "x":
@@ -44,6 +60,23 @@ namespace _1
                         break;
                 }
             }
+
+
+
+            // ______________ Local function ______________
+
+            void Calculate(int[] numbers, string letters)
+            {
+                int sum = 0;
+                foreach (int number in numbers)
+                {
+                    sum += number;
+                }
+                Console.WriteLine(numbers.Max());
+                Console.WriteLine(numbers.Min());
+                Console.WriteLine(letters[0]);
+            }
+
         }
 
         static public string DisplayMenu()
@@ -52,8 +85,10 @@ namespace _1
             Console.WriteLine("    1. Типы");
             Console.WriteLine("    2. Строки");
             Console.WriteLine("    3. Массивы");
+            Console.WriteLine("    4. Кортежи");
+            Console.WriteLine("    5. Local function");
 
-            Console.WriteLine("    x. Выйти");
+            Console.WriteLine("\n    x. Выйти");
 
             Console.Write("\n    Ваш выбор: ");
 

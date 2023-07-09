@@ -3,7 +3,7 @@ using System.Text;
 
 namespace _1
 {
-    public class StringsLab
+    public class Strings
     {
         internal void Main()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _1
 {
-    public class ArraysLab
+    public class Arrays
     {
         internal void Main()
         {
