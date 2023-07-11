@@ -10,7 +10,7 @@ namespace _1
     {
         internal void Main()
         {
-            // ______________ A ______________
+// ______________ A ______________
 
             int[,] array = new int[,] {
             { 1, 2, 3 },
@@ -31,7 +31,7 @@ namespace _1
             }
             Console.WriteLine("");
 
-            // ______________ B ______________
+// ______________ B ______________
 
             string[] stringArray = { "first", "two", "three" };
 
@@ -55,7 +55,7 @@ namespace _1
             }
             Console.WriteLine("");
 
-            // ______________ C ______________
+// ______________ C ______________
 
             double[][] stepwiseArray = new double[3][];
 
@@ -90,7 +90,7 @@ namespace _1
 
             Console.WriteLine("");
 
-            // ______________ D ______________
+// ______________ D ______________
 
             var notTypedArray = new[] {
                 new[] { 1.0, 1.5, 2.0 },
