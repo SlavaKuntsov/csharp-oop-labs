@@ -88,7 +88,7 @@ namespace _1
             Console.WriteLine("    4. Кортежи");
             Console.WriteLine("    5. Local function");
 
-            Console.WriteLine("\n    x. Выйти");
+            //Console.WriteLine("\n    x. Выйти");
 
             Console.Write("\n    Ваш выбор: ");
 
