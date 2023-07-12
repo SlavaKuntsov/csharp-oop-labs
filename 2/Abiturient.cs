@@ -24,7 +24,7 @@ namespace _2
         private int _sum = 0;
         private static bool _goodAcademicPerformance = false;
 
-// ______________ Конструкторы ______________
+        // ______________ Конструкторы ______________
         static Abiturient() // статистический вызывается сразу
         {
             Console.WriteLine("Инициализация абитуриента...\n");
@@ -56,7 +56,7 @@ namespace _2
 
             _id = phoneNumber.GetHashCode();
 
-// ______________ Средний балл ______________
+            // ______________ Средний балл ______________
             foreach (int grade in _Grades)
             {
                 _sum += grade;
@@ -73,7 +73,7 @@ namespace _2
             abiturientCount++;
             MainAbiturient();
         }
-// ???????????????????????????????????????????????????????
+        // ???????????????????????????????????????????????????????
         private Abiturient(int id) // закрытый
         {
             this._id = id;
@@ -88,14 +88,14 @@ namespace _2
         }
 
 
-// ______________ Fuctions ______________
+        // ______________ Функции ______________
         void MainAbiturient()
         {
             Console.WriteLine($"id: {_id}");
             Console.WriteLine($"имя: {_name}\nфамилия: {_surname}\nотчество: {_patronymic}");
             Console.WriteLine($"адрес: {_address}");
             Console.WriteLine($"номер телефона: {_phoneNumber}");
-            if(_Grades == null || _Grades.Count == 0)
+            if (_Grades == null || _Grades.Count == 0)
             {
                 Console.WriteLine("\n");
             }
@@ -107,7 +107,7 @@ namespace _2
                 //Console.WriteLine($"успеваемость: {_goodAcademicPerformance}\n");
             }
             Console.WriteLine("\n");
-            
+
         }
 
         public static void PrintCount()
@@ -124,7 +124,7 @@ namespace _2
             foreach (Abiturient abiturient in array)
             {
                 int minGrade = abiturient._Grades.Min();
-                if(minGrade < 4)
+                if (minGrade < 4)
                 {
                     Console.WriteLine($"    -{abiturient._name}");
                 }
@@ -136,7 +136,7 @@ namespace _2
             Console.WriteLine($"\nСписок абтуриентов с баллом выше : {point}");
             foreach (Abiturient abiturient in array)
             {
-                if(abiturient._sum > point)
+                if (abiturient._sum > point)
                 {
                     Console.WriteLine($"    -{abiturient._name}");
                 }
@@ -149,7 +149,7 @@ namespace _2
     {
         static void Main()
         {
-// ______________ Массив обьектов Abiturient ______________
+            // ______________ Массив обьектов Abiturient ______________
             Abiturient[] allAbiturients = new Abiturient[]
             {
                 //new(),
@@ -161,17 +161,17 @@ namespace _2
             //var abiturient3 = Abiturient.CreateAbiturientWithId(123);
 
 
-// ______________ Вывод количества обьектов ______________
+            // ______________ Вывод количества обьектов ______________
             Abiturient.PrintCount();
 
 
-// ______________ Partial class ______________
+            // ______________ Partial class ______________
             Person void1 = new();
             void1.AbiturientVoid();
             void1.OtherVoid();
 
 
-// ______________ Сравнение обьектов ______________ ??????????????????????????
+            // ______________ Сравнение обьектов ______________ ??????????????????????????
             Object abiturient1 = new();
             Object abiturient1_CLone = new();
 
@@ -185,11 +185,11 @@ namespace _2
             //Abiturient.AcademicPerformance();
 
 
-// ______________ Cписок абитуриентов, имеющих неудовлетворительные оценки ______________
+            // ______________ Cписок абитуриентов, имеющих неудовлетворительные оценки ______________
             Abiturient.UnsatisfactoryGrades(allAbiturients);
 
 
-// ______________ Список абтуриентов с баллом выше заданного ______________
+            // ______________ Список абтуриентов с баллом выше заданного ______________
             Abiturient.GradesIsHigherThan(allAbiturients, 6);
 
 
