@@ -193,7 +193,7 @@ namespace _4
 
             Console.WriteLine("\n-----------");
 
-            lab.SortByPrice();
+            //lab.SortByPrice();
 
 
             Console.WriteLine("\n-----------");
@@ -206,6 +206,18 @@ namespace _4
             lab.NewListValues = new List<Products>() { new Device { Name = "new device", Price = 999, Manufacturer = "рб", Category = ProductCategorty.Device } };
             lab.Print();
 
+            Console.WriteLine("\n______________ controller ______________");
+
+            LaboratoryController laboratoryController = new();
+
+            laboratoryController.AddDevice("my pc", 2100, "china");
+            laboratoryController.AddDevice("other pc", 1000, "c1");
+            laboratoryController.AddDevice("my pc2", 3700, "c2");
+            laboratoryController.AddScanner("scanner", 400, "belarus", 1000);
+
+            laboratoryController.Print();
+            Console.WriteLine("");
+            laboratoryController.CategoryCount();   
         }
     }
 }
