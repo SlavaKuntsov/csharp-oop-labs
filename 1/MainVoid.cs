@@ -19,7 +19,8 @@ namespace _1
                 switch (classChoise)
                 {
                     case "1":
-                        Console.WriteLine(123);
+                        Types newTypes = new();
+                        newTypes.Main();
                         ReturnToMenu();
                         break;
                     case "2":
@@ -41,12 +42,17 @@ namespace _1
                         int[] numbersArray = { 1, 25334, 3 };
                         string letter = "New string";
 
-                        Calculate(numbersArray, letter);
-
+                        Console.WriteLine(Calculate(numbersArray, letter));
                         ReturnToMenu();
                         break;
                     case "6":
-                        Console.WriteLine("checked/unchecked");
+                        Console.WriteLine("checked");
+                        FunctionOne();
+                        ReturnToMenu();
+                        break;
+                    case "7":
+                        Console.WriteLine("unchecked");
+                        FunctionTwo();
                         ReturnToMenu();
                         break;
 
@@ -65,16 +71,45 @@ namespace _1
 
             // ______________ Local function ______________
 
-            void Calculate(int[] numbers, string letters)
+            (int, int, int, char) Calculate(int[] numbers, string letters)
             {
+
                 int sum = 0;
                 foreach (int number in numbers)
                 {
                     sum += number;
                 }
-                Console.WriteLine(numbers.Max());
-                Console.WriteLine(numbers.Min());
-                Console.WriteLine(letters[0]);
+                //Console.WriteLine(numbers.Max());
+                //Console.WriteLine(numbers.Min());
+                //Console.WriteLine(letters[0]);
+
+                (int, int, int, char) tuple = (numbers.Max(), numbers.Min(), sum, letters[0]);
+                return tuple;
+            }
+
+
+            // ______________ checked/unchecked ______________
+
+            void FunctionOne()
+            {
+                checked
+                {
+                    int max = int.MaxValue;
+                    Console.WriteLine("max значение int в checked: " + max);
+                    max++;
+                    Console.WriteLine("Yвеличить значение на 1: " + max);
+                }
+            }
+
+            void FunctionTwo()
+            {
+                unchecked
+                {
+                    int max = int.MaxValue;
+                    Console.WriteLine("max значение int в unchecked: " + max);
+                    max++;
+                    Console.WriteLine("Увеличение значения на 1 : " + max);
+                }
             }
 
         }
@@ -87,6 +122,8 @@ namespace _1
             Console.WriteLine("    3. Массивы");
             Console.WriteLine("    4. Кортежи");
             Console.WriteLine("    5. Local function");
+            Console.WriteLine("    6. checked");
+            Console.WriteLine("    7. unchecked");
 
             //Console.WriteLine("\n    x. Выйти");
 

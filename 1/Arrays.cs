@@ -18,6 +18,8 @@ namespace _1
             { 7, 8, 9 }
             };
 
+
+
             int row = array.GetLength(0);
             int col = array.GetLength(1);
 
@@ -43,10 +45,11 @@ namespace _1
 
             Console.WriteLine($"\nArray length: {stringArray.Length}\n");
 
+            Console.Write("new position: ");
+            int position = Convert.ToInt32(Console.ReadLine());
             Console.Write("new value: ");
-            string? newValue = Console.ReadLine();
-
-            stringArray[2] = newValue ?? "qwe";
+            /*string newValue = Console.ReadLine();*/
+            stringArray[position - 1] = Console.ReadLine();
 
             Console.WriteLine("\n    new:");
             foreach (string word in stringArray)
@@ -59,16 +62,13 @@ namespace _1
 
             double[][] stepwiseArray = new double[3][];
 
-            //stepwiseArray[0] = new double[2];
-            //stepwiseArray[1] = new double[3];
-            //stepwiseArray[2] = new double[4];
-
             for (int i = 0; i < 3; i++)
             {
                 stepwiseArray[i] = new double[i + 1];
             }
 
             // input
+            Console.WriteLine("New Array");
             for (int i = 0; i < stepwiseArray.Length; i++)
             {
                 for (int j = 0; j < stepwiseArray[i].Length; j++)
@@ -76,6 +76,7 @@ namespace _1
                     stepwiseArray[i][j] = Convert.ToDouble(Console.ReadLine());
                 }
             }
+            
 
             // output
             Console.WriteLine("\nStepwise Array:\n");

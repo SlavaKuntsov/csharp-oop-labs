@@ -14,12 +14,12 @@ namespace _1
             string string2 = "Это вторая строка";
             string string3 = "Это третья строка";
 
-            int result = string.Compare(string1, string2); // можно использовать Compare
+            bool result = string.Equals(string1, string2)
+                ; 
 
             Console.WriteLine(result);
 
             // ______________ B ______________
-
 
             string all1 = string1 + ' ' + string2 + ' ' + string3;
             string all2 = string.Concat(string1, ' ', string2, ' ', string3);
@@ -36,7 +36,7 @@ namespace _1
             //
 
             string substring = string1.Substring(4, 6);
-
+ 
             Console.WriteLine(substring);
 
             //
@@ -45,7 +45,7 @@ namespace _1
 
             foreach (string word in allWords)
             {
-                Console.WriteLine($"Substring: {word}"); // + интерполирование
+                Console.WriteLine($"Substring: {word}"); 
             }
 
             //
@@ -62,7 +62,7 @@ namespace _1
 
             // ______________ С ______________
 
-            string stringNull = null;
+            string? stringNull = null;
             string stringEmpty = "";
 
             if(string.IsNullOrEmpty(stringEmpty))
@@ -82,7 +82,10 @@ namespace _1
 
             build.Insert(0, "1. ");
 
-            build.Insert(6, " !");
+            build.Append(" !");
+
+            /*build.Insert(6, " !");*/
+
 
 
             Console.WriteLine(build);
