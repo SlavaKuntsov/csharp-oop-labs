@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,156 +10,164 @@ namespace _2
     class Abiturient // ______________ Вариант 5 ______________
     {
         private static int abiturientCount = 0;
+        private readonly uint _id;
 
-        private readonly int _id;
-
-        public string _name { get; set; } = string.Empty;
-        private string _surname { get; set; } = string.Empty;
-        private string _patronymic { get; set; } = string.Empty;
-
+        public string? _name { get; set; }
+        private string? _surname { get; set; }
+        private string? _patronymic { get; set; }
         private const string _address = "БГТУ";
-        private string _phoneNumber { get; set; } = string.Empty;
-        private List<int> _Grades;
+        private string? _phoneNumber { get; set; }
 
-        // успеваемость
-        private int _sum = 0;
-        private static bool _goodAcademicPerformance = false;
+        private List<int>? _Grades;
+        private double? _sum { get; set; }
+        private int? _maxGrade { get; set; }
+        private int? _minGrade { get; set; }
+
 
         // ______________ Конструкторы ______________
-        static Abiturient() // статистический вызывается сразу
+        static Abiturient() 
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Инициализация абитуриента...\n");
+            Console.ResetColor();
         }
-
-        public Abiturient() //по умолчанию или без параметров???
+        public Abiturient() 
+        {            
+            _id = (uint)abiturientCount.GetHashCode();
+            abiturientCount++;
+        }
+        public Abiturient(string name, string surname, string patronymic, 
+            List<int> Grades = null)
         {
-            Random rnd = new Random(245);
+            this._name = name;
+            this._surname = surname;
+            this._patronymic = patronymic;
+            this._phoneNumber = "+375293333333";
+            this._Grades = Grades ?? new List<int> { 5, 5, 5, 5, 5 };
 
-            //_name = "имя";
-            //_surname = "фамилия";
-            //_patronymic = "отчество";
-            //_address = "адрес";
-            //_phoneNumber = "375293647671";
-            //_Grades = new List<int>();
+            _id = (uint)abiturientCount.GetHashCode();
 
-            _id = _phoneNumber.GetHashCode();
+            AcademicStatistics(_Grades);
 
             abiturientCount++;
-            MainAbiturient();
         }
-        public Abiturient(string name, string surname, string patronymic, string address, string phoneNumber, List<int> Grades) // с параметрами
-        {
-            _name = name;
-            _surname = surname;
-            _patronymic = patronymic;
-            _phoneNumber = phoneNumber;
-            _Grades = Grades;
+        public Abiturient(string name, string surname, string patronymic, string phoneNumber, List<int> Grades)
+        { 
+            this._name = name;
+            this._surname = surname;
+            this._patronymic = patronymic;
+            this._phoneNumber = phoneNumber;
+            this._Grades = Grades;
 
-            _id = phoneNumber.GetHashCode();
+            _id = (uint)abiturientCount.GetHashCode();
 
-            // ______________ Средний балл ______________
-            foreach (int grade in _Grades)
-            {
-                _sum += grade;
-            }
-            _sum = _sum / _Grades.Count;
-
-            /*
-            if(_sumResult > 6)
-            {
-                _goodAcademicPerformance = true;
-            }
-             */
+            AcademicStatistics(_Grades);
 
             abiturientCount++;
-            MainAbiturient();
         }
-        // ???????????????????????????????????????????????????????
-        private Abiturient(int id) // закрытый
+        private Abiturient(int id)
         {
-            this._id = id;
+            this._id = (uint)id;
 
             abiturientCount++;
-            MainAbiturient();
         }
-
-        public static Abiturient CreateAbiturientWithId(int id) // определенный id
+        public static Abiturient CreateAbiturientWithId(int id) 
         {
             return new Abiturient(id);
         }
 
 
-        // ______________ Функции ______________
-        void MainAbiturient()
+        // ______________ Методы ______________
+        public void PrintInMethods()
         {
-            Console.WriteLine($"id: {_id}");
-            Console.WriteLine($"имя: {_name}\nфамилия: {_surname}\nотчество: {_patronymic}");
-            Console.WriteLine($"адрес: {_address}");
-            Console.WriteLine($"номер телефона: {_phoneNumber}");
-            if (_Grades == null || _Grades.Count == 0)
-            {
-                Console.WriteLine("\n");
-            }
-            else
-            {
-                Console.Write("оценки: ");
-                Console.WriteLine(String.Join(", ", _Grades));
-                //Console.WriteLine($"sum grades: {_sumResult}\n");
-                //Console.WriteLine($"успеваемость: {_goodAcademicPerformance}\n");
-            }
-            Console.WriteLine("\n");
-
+            #region
+            //Console.WriteLine($"id: {abiturient._id}");
+            //Console.WriteLine($"имя: {abiturient._name}\nфамилия: {abiturient._surname}\nотчество: {abiturient._patronymic}");
+            //Console.WriteLine($"адрес: {_address}");
+            //Console.WriteLine($"номер телефона: {abiturient._phoneNumber}");
+            #endregion
+            string gradesString = string.Join(", ", _Grades);
+            Console.WriteLine($"    id: {_id}, имя: {_name}, фамилия: {_surname}, отчество: {_patronymic}, адрес: {_address} номер телефона: {_phoneNumber}, отметки: {gradesString}, средний балл: {_sum}, min: {_minGrade}, max: {_maxGrade}");
         }
-
+        public static void PrintAll(Array array)
+        {
+            foreach(Abiturient abiturient in array)
+            {
+                string gradesString = string.Join(", ", abiturient._Grades);
+                Console.WriteLine($"    id: {abiturient._id}, имя: {abiturient._name}, фамилия: {abiturient._surname}, отчество: {abiturient._patronymic}, адрес: {_address} номер телефона: {abiturient._phoneNumber}, отметки: {gradesString}, средний балл: {abiturient._sum}, min: {abiturient._minGrade}, max: {abiturient._maxGrade}");
+            }
+        }
         public static void PrintCount()
         {
-            Console.WriteLine("---");
-            Console.WriteLine($"Количество абитуриентов: {abiturientCount}");
-            Console.WriteLine("---\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"\nКоличество абитуриентов: {abiturientCount}\n");
+            Console.ResetColor();
         }
-
+        // 1 или 3 метода?
+        private void AcademicStatistics(List<int> grades)
+        {
+            this._sum = grades.Average();
+            this._maxGrade = grades.Max();
+            this._minGrade = grades.Min();
+        }
         public static void UnsatisfactoryGrades(Array array)
         {
-            //Console.WriteLine("array: " + array);
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"\nCписок абитуриентов, имеющих неудовлетворительные оценки:");
+            Console.ResetColor();
             foreach (Abiturient abiturient in array)
             {
-                int minGrade = abiturient._Grades.Min();
-                if (minGrade < 4)
-                {
-                    Console.WriteLine($"    -{abiturient._name}");
-                }
+                if (abiturient._minGrade < 4)
+                    abiturient.PrintInMethods();
             }
         }
-        public static void GradesIsHigherThan(Array array, int point)
+        public static void GradesIsHigherThan(Array array, ref int point)
         {
-            //Console.WriteLine("array: " + array);
-            Console.WriteLine($"\nСписок абтуриентов с баллом выше : {point}");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"\nСписок абтуриентов с баллом выше : '{point}'");
+            Console.ResetColor();
             foreach (Abiturient abiturient in array)
             {
                 if (abiturient._sum > point)
-                {
-                    Console.WriteLine($"    -{abiturient._name}");
-                }
+                    abiturient.PrintInMethods();
             }
         }
 
+
+        // ______________ Переопределения ______________
     }
+
 
     class Program
     {
         static void Main()
         {
-            // ______________ Массив обьектов Abiturient ______________
+            // ______________ Создание обьектов ______________ 
             Abiturient[] allAbiturients = new Abiturient[]
             {
-                //new(),
-                //Abiturient.CreateAbiturientWithId(13),
-                new("Святослав", "Кунцов", "Юрьевич", "кв 69", "3647671", new List<int> { 4, 4, 9, 4, 4 } ),
-                new("паша", "паша", "паша", "", "13123", new List<int> { 3, 4, 4, 4, 4 } ),
-                new("никита", "никита", "никита", "", "897689", new List<int> { 9, 9, 9, 9, 9 } ),
+                new("Святослав", "Кунцов", "Юрьевич", "3647671", new List<int> { 4, 4, 9, 4, 4 } ),
+                new("паша", "паша", "паша", "13123", new List<int> { 3, 4, 4, 4, 4 } ),
+                new("никита", "никита", "никита", "897689", new List<int> { 9, 9, 9, 9, 9 } ),
             };
-            //var abiturient3 = Abiturient.CreateAbiturientWithId(123);
+
+            Abiturient objectWithDefaultParam = new("аня", "аня", "аня", new List<int> { 9, 9, 9, 9, 9 });
+            Abiturient objectWithoutParams = new();
+
+            var _ = Abiturient.CreateAbiturientWithId(123);
+
+            Abiturient.PrintAll(allAbiturients);
+
+
+            // ______________ Сравнение обьектов ______________ 
+
+
+            // ______________ Cписок абитуриентов, имеющих неудовлетворительные оценки ______________
+            Abiturient.UnsatisfactoryGrades(allAbiturients);
+
+
+            // ______________ Список абтуриентов с баллом выше заданного ______________
+            int needPoint = 6;
+            Abiturient.GradesIsHigherThan(allAbiturients, ref needPoint);
 
 
             // ______________ Вывод количества обьектов ______________
@@ -169,30 +178,6 @@ namespace _2
             Person void1 = new();
             void1.AbiturientVoid();
             void1.OtherVoid();
-
-
-            // ______________ Сравнение обьектов ______________ ??????????????????????????
-            Object abiturient1 = new();
-            Object abiturient1_CLone = new();
-
-            //Abiturient abiturient2 = new("Святослав", "Кунцов", "Юрьевич", "кв 69", "3647671", new List<int> { 4, 4, 9, 4, 4 } );
-            //Abiturient abiturient2_Clone = new("Святослав", "Кунцов", "Юрьевич", "кв 69", "3647671", new List<int> { 4, 4, 9, 4, 4 } );
-
-            //Console.WriteLine("\n--- " + abiturient1.Equals(abiturient2));
-            //Console.WriteLine("--- " + abiturient1.Equals(abiturient1_CLone));
-
-            //Console.WriteLine("успеваемость:\n");
-            //Abiturient.AcademicPerformance();
-
-
-            // ______________ Cписок абитуриентов, имеющих неудовлетворительные оценки ______________
-            Abiturient.UnsatisfactoryGrades(allAbiturients);
-
-
-            // ______________ Список абтуриентов с баллом выше заданного ______________
-            Abiturient.GradesIsHigherThan(allAbiturients, 6);
-
-
         }
     }
 
@@ -200,7 +185,9 @@ namespace _2
     {
         public void AbiturientVoid()
         {
-            Console.WriteLine("------    this void in Abiturient.cs   ------");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("this void in Abiturient.cs");
+            Console.ResetColor();
         }
 
     }
