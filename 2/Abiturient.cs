@@ -12,7 +12,9 @@ namespace _2
         private static int abiturientCount = 0;
         private readonly uint _id;
 
-        public string? _name { get; set; }
+        // ограничить поле по set
+
+        private string? _name { get; set; }
         private string? _surname { get; set; }
         private string? _patronymic { get; set; }
         private const string _address = "БГТУ";
@@ -86,8 +88,8 @@ namespace _2
             //Console.WriteLine($"адрес: {_address}");
             //Console.WriteLine($"номер телефона: {abiturient._phoneNumber}");
             #endregion
-            string gradesString = string.Join(", ", _Grades);
-            Console.WriteLine($"    id: {_id}, имя: {_name}, фамилия: {_surname}, отчество: {_patronymic}, адрес: {_address} номер телефона: {_phoneNumber}, отметки: {gradesString}, средний балл: {_sum}, min: {_minGrade}, max: {_maxGrade}");
+            string gradesString = string.Join(", ", this._Grades);
+            Console.WriteLine($"    id: {this._id}, имя: {this._name}, фамилия: {this._surname}, отчество: {this._patronymic}, адрес: {_address} номер телефона: {this._phoneNumber}, отметки: {gradesString}, средний балл: {this._sum}, min: {this._minGrade}, max: {this._maxGrade}");
         }
         public static void PrintAll(Array array)
         {
@@ -100,8 +102,9 @@ namespace _2
         public static void PrintCount()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"\nКоличество абитуриентов: {abiturientCount}\n");
+            Console.Write("\nКоличество абитуриентов: ");
             Console.ResetColor();
+            Console.WriteLine(abiturientCount + "\n");
         }
         // 1 или 3 метода?
         private void AcademicStatistics(List<int> grades)
@@ -135,6 +138,32 @@ namespace _2
 
 
         // ______________ Переопределения ______________
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Abiturient other = (Abiturient)obj;
+
+            return _name == other._name &&
+                   _surname == other._surname &&
+                   _patronymic == other._patronymic &&
+                   _phoneNumber == other._phoneNumber &&
+                   _Grades.SequenceEqual(other._Grades);
+        }
+        public override int GetHashCode()
+        {
+            // надо ли самому делать хэши
+            Console.WriteLine("hash code");
+            return base.GetHashCode();
+        }
+        public override string ToString()
+        {
+            return $"Фамилия Имя этого студента - {this._surname} {this._name}";
+        }
     }
 
 
@@ -159,6 +188,15 @@ namespace _2
 
 
             // ______________ Сравнение обьектов ______________ 
+            bool equals_1 = allAbiturients[0].Equals(allAbiturients[1]);
+            bool equals_2 = allAbiturients[2].Equals(allAbiturients[2]);
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\nСравнение обьектов:");
+            Console.ResetColor();
+
+            Console.WriteLine($"    {equals_1}");
+            Console.WriteLine($"    {equals_2}");
 
 
             // ______________ Cписок абитуриентов, имеющих неудовлетворительные оценки ______________
@@ -178,6 +216,9 @@ namespace _2
             Person void1 = new();
             void1.AbiturientVoid();
             void1.OtherVoid();
+
+            // ______________ Переопеределение ______________
+            Console.WriteLine($"\n{allAbiturients[0].ToString()}");
         }
     }
 
