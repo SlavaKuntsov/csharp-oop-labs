@@ -2,11 +2,12 @@
 using System.Drawing;
 using System.Xml.Linq;
 
-namespace _5
+namespace _6
 {
     // ______________ Перечесление ______________
     public enum ProductCategorty
     {
+        Product,
         Device,
         PrinterDevice,
         Scanner,
@@ -164,10 +165,11 @@ namespace _5
 
 
     // ______________ Функции ______________
-    internal class Inheritance
+    class Inheritance
     {
         static void Main()
         {
+            #region old
             Console.WriteLine("\n______________ 1 ______________\n");
 
             Device dev = new() { Name = "device", Price = 10000, Manufacturer = "China", Category = ProductCategorty.Device };
@@ -214,10 +216,34 @@ namespace _5
             laboratoryController.AddDevice("other pc", 1000, "c1");
             laboratoryController.AddDevice("my pc2", 3700, "c2");
             laboratoryController.AddScanner("scanner", 400, "belarus", 1000);
+            laboratoryController.AddScanner("", 12312, "belarus", 200);
 
             laboratoryController.Print();
             Console.WriteLine("");
-            laboratoryController.CategoryCount();   
+            laboratoryController.CategoryCount();
+            #endregion
+
+
+            // ______________ 5) Assert ______________
+
+            object? someObject = null;
+            Debug.Assert(someObject != null, "someObject is null! this could totally be a bug!");
+            //try
+            //{
+            //    int a = 0;
+            //    if(a == 1)
+            //    {
+            //        throw new MyExceptions("error");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine(a);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
         }
     }
 }

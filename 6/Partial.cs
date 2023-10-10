@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _5
+namespace _6
 {
     public partial class Printer
     {
@@ -36,12 +36,45 @@ namespace _5
 
         public void Print() // было SortByPrice, стало Print
         {
-            List<Products> sortAllProducts = new(allProducts.OrderByDescending(p => p.Price)) ;
+            // + sort
+            List<Products> sortAllProducts = new(allProducts.OrderByDescending(p => p.Price));
             //Console.Write("sort by price: \n");
-            foreach (Products tech in sortAllProducts)
+            foreach (Products product in sortAllProducts)
             {
-                Console.WriteLine(tech);
-                //Console.WriteLine("    " + tech);
+                try
+                {
+                    Console.WriteLine(product);
+                    if (product.Price < 1000)
+                    {
+                        throw new PriceTooSmallException(product.Name);
+                    }
+                    if (product.Name == string.Empty)
+                    {
+                        throw new UndefinedNameException();
+                    }
+                    int res = (int)(product.Price / 0);
+
+                }
+                catch (PriceTooSmallException ex)
+                {
+                    Console.WriteLine("   exception: " + ex.Message);
+                }
+                catch (UndefinedNameException ex)
+                {
+                    Console.WriteLine("   exception: " + ex.Message);
+                }
+                catch (MyDivideByZeroException ex)
+                {
+                    Console.WriteLine("   exception: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Исключение: {ex.Message}");
+                }
+                finally
+                {
+                    Console.WriteLine("");
+                }
             }
         }
         //public void Print() //изначальный Print
@@ -60,7 +93,7 @@ namespace _5
             foreach (Products product in allProducts)
             {
                 allCount++;
-                if(categoryCount.ContainsKey(product.Category))
+                if (categoryCount.ContainsKey(product.Category))
                 {
                     categoryCount[product.Category]++;
                 }
@@ -69,7 +102,7 @@ namespace _5
                     categoryCount.Add(product.Category, 1);
                 }
             }
-            foreach(KeyValuePair<ProductCategorty, int> item in categoryCount)
+            foreach (KeyValuePair<ProductCategorty, int> item in categoryCount)
             {
                 Console.WriteLine(item.Key + ": " + item.Value);
             }
@@ -83,7 +116,7 @@ namespace _5
 
     }
 
-    public partial class LaboratoryController 
+    public partial class LaboratoryController
     {
         private Laboratory lab;
 
@@ -110,7 +143,7 @@ namespace _5
         }
         public void CategoryCount()
         {
-            lab.CategoryCount();   
+            lab.CategoryCount();
         }
     }
 

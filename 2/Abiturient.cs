@@ -35,7 +35,7 @@ namespace _2
         }
         public Abiturient() 
         {            
-            _id = (uint)abiturientCount.GetHashCode();
+            _id = (uint)_address.GetHashCode();
             abiturientCount++;
         }
         public Abiturient(string name, string surname, string patronymic, 
@@ -47,7 +47,7 @@ namespace _2
             this._phoneNumber = "+375293333333";
             this._Grades = Grades ?? new List<int> { 5, 5, 5, 5, 5 };
 
-            _id = (uint)abiturientCount.GetHashCode();
+            _id = (uint)_name.GetHashCode();
 
             AcademicStatistics(_Grades);
 
@@ -61,7 +61,7 @@ namespace _2
             this._phoneNumber = phoneNumber;
             this._Grades = Grades;
 
-            _id = (uint)abiturientCount.GetHashCode();
+            _id = (uint)_name.GetHashCode();
 
             AcademicStatistics(_Grades);
 
@@ -219,6 +219,14 @@ namespace _2
 
             // ______________ Переопеределение ______________
             Console.WriteLine($"\n{allAbiturients[0].ToString()}");
+
+            // ______________ Переопеределение ______________
+            var anonym = new { name = "slava", surname = "k", patronymic = "y"};
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("Anonym: ");
+            Console.ResetColor();
+            Console.WriteLine($"{anonym.name} {anonym.surname} {anonym.patronymic}");
         }
     }
 

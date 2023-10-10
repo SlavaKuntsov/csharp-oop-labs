@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Linq;
-using System.Collections;
+﻿using System.Collections;
 
 namespace _3
 {
-    class Set<T> : IEnumerable<T>
+    public class Set<T> : IEnumerable<T>
     {
         // ______________ IEnumerable ______________
         public IEnumerator<T> GetEnumerator()
@@ -30,15 +23,17 @@ namespace _3
         // ______________ Конструкторы ______________
         static Set()
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Инициализация множества...\n");
+            Console.ResetColor();
         }
         public Set()
         {
-            allItems = new HashSet<T>();
+            this.allItems = new HashSet<T>();
         }
         public Set(IEnumerable<T> collection)
         {
-            allItems = new HashSet<T>(collection);
+            this.allItems = new HashSet<T>(collection);
         }
 
 
@@ -79,14 +74,25 @@ namespace _3
         }
 
 
+        // ______________ Переопределения ______________
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public override bool Equals(object? obj)
+        {
+            return base.Equals(obj);
+        }
+
+
         // ______________ Функции ______________
         public void Add(T item)
         {
-            allItems.Add(item);
+            this.allItems.Add(item);
         }
         public void Remove(T item)
         {
-            allItems.Remove(item);
+            this.allItems.Remove(item);
         }
 
 
@@ -99,36 +105,40 @@ namespace _3
             {
                 strings.Add(item);
             }
-            var t = strings.OrderBy(x => x.Length).ToList<string>().First<string>();
+            string shortestWord = strings.OrderBy(x => x.Length).ToList<string>().First<string>();
 
-            Console.WriteLine("shortest word: " + t);
+            Console.WriteLine("shortest word: " + shortestWord);
         }
         public static void Sort(Set<T> set)
         {
             
-            List<T> numbers = new();
+            List<T> sortArray = new();
 
             foreach (T item in set.allItems)
             {
-                numbers.Add(item);
+                sortArray.Add(item);
             }
-            numbers.Sort();
+            sortArray.Sort();
 
             Console.Write("sort: ");
-            foreach (T person in numbers)
+            foreach (T item in sortArray)
             {
-                Console.Write(person + " ");
+                Console.Write(item + " ");
             }
             Console.Write("\n\n");
         }
 
         public void Print()
         {
-            foreach (T item in allItems)
+            if(this.allItems.Count == 0)
+            {
+                Console.Write("Нет элементов");
+            }
+            foreach (T item in this.allItems)
             {
                 Console.Write(item + " ");
             }
-            Console.WriteLine("\n");
+            Console.Write("\n");
         }
 
 
@@ -136,125 +146,34 @@ namespace _3
         public class Production
         {
             private int _id { get; set; }
-            private string _organizationName { get; set; } = String.Empty;
+            private string _organizationName { get; set; }
 
             public Production(int id, string name)
             {
-                _id = id;
-                _organizationName = name;
+                this._id = id;
+                this._organizationName = name;
+
                 Console.WriteLine("Организация: ");
-                Console.WriteLine("id: " + _id);
-                Console.WriteLine("название: " + _organizationName);
+                Console.WriteLine($"    id: {_id}, Название: {_organizationName}");
+
+
             }
         }
         public class Developer
         {
             private int _id { get; set; }
-            private string _developerName { get; set; } = String.Empty;
-            private string _department { get; set; } = String.Empty;
+            private string _developerName { get; set; }
+            private string _department { get; set; }
 
             public Developer(int id, string name, string department)
             {
-                _id = id;
-                _developerName = name;
-                _department = department;
+                this._id = id;
+                this._developerName = name;
+                this._department = department;
+
                 Console.WriteLine("Разработчик: ");
-                Console.WriteLine("id: " + _id);
-                Console.WriteLine("Имя: " + _developerName);
-                Console.WriteLine("Отдел: " + _department);
+                Console.WriteLine($"    id: {_id}, ФИО: {_developerName}, Отдел: {_department}");
             }
-        }
-    }
-
-
-    static class StatisticOperation<T>
-    {
-        public static int Sum(Set<int> set)
-        {
-            int sum = 0;
-            foreach (int number in set)
-            {
-                sum += number;
-            }
-            return sum;
-        }
-        public static int Count(Set<T> set)
-        {
-            int count = 0;
-            foreach (T number in set)
-            {
-                count++;
-            }
-            return count;
-        }
-        public static int Difference(Set<int> set)
-        {
-            int min = set.Min();
-            int max = set.Max();
-
-            int diff = max - min;
-
-            return diff;
-        }
-
-    }
-
-
-    class Program
-    {
-        static void Main()
-        {
-            Set<int> set = new(new int[] { 1, 2, 3, 4 });
-
-            set.Add(5);
-
-            set >>= 1;
-            set <<= 6;
-
-            Set<int> set2 = new(new int[] { 56, 99, 2, 3, 12 });
-            Set<int> set3 = new(new int[] { 2, 3 });
-
-            set.Print();
-            set2.Print();
-
-            bool subset = set > set2;
-            Console.WriteLine("subset: " + subset);
-
-            bool equals1 = set != set2;
-            Console.WriteLine("equals set set2: "+ equals1);
-
-            bool equals2 = set2 != set3;
-            Console.WriteLine("equals set2 set3: "+ equals2 + "\n");
-
-            Set<int> intesiction = set % set2;
-            intesiction.Print();
-
-            // ______________  ______________
-
-            Console.WriteLine("-----------------\n");
-            Set<int>.Sort(set2);
-
-            Set<string> stringSet = new(new string[] { "chai", "tea", "iLoveYou", "1265465465" });
-            Set<string>.FindShortestWord(stringSet);
-
-            // ______________  ______________
-
-            Console.WriteLine("-----------------\n");
-
-            Set<object>.Developer dev = new(1, "Слава", "Фронтенд");
-
-            // ______________  ______________
-
-            Console.WriteLine("-----------------\n");
-
-            Console.WriteLine("sum set: " + StatisticOperation<int>.Sum(set));
-            Console.WriteLine("count set: " + StatisticOperation<int>.Count(set));
-            Console.WriteLine("difference set2: " + StatisticOperation<int>.Difference(set2));
-
-            Console.WriteLine("\ncount stringSet: " + StatisticOperation<string>.Count(stringSet));
-
-            // 2) упорядочивание 
-            // как сделать и нужно ли
         }
     }
 }
