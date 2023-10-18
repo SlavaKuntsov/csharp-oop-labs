@@ -12,15 +12,24 @@ namespace _2
         private static int abiturientCount = 0;
         private readonly uint _id;
 
-        // ограничить поле по set
-
         private string? _name { get; set; }
         private string? _surname { get; set; }
         private string? _patronymic { get; set; }
         private const string _address = "БГТУ";
-        private string? _phoneNumber { get; set; }
+        private string? _phoneNumber;
+        public string PhoneNumber
+        {
+            get
+            {
+                return _phoneNumber;
+            }
+            set
+            {
+                _phoneNumber = value;   
+            }
+        }
 
-        private List<int>? _Grades;
+        private List<int> _Grades;
         private double? _sum { get; set; }
         private int? _maxGrade { get; set; }
         private int? _minGrade { get; set; }
@@ -106,21 +115,23 @@ namespace _2
             Console.ResetColor();
             Console.WriteLine(abiturientCount + "\n");
         }
-        // 1 или 3 метода?
         private void AcademicStatistics(List<int> grades)
         {
             this._sum = grades.Average();
             this._maxGrade = grades.Max();
             this._minGrade = grades.Min();
         }
-        public static void UnsatisfactoryGrades(Array array)
+        public static void UnsatisfactoryGrades(Array array, out int minGrade)
         {
+
+            minGrade = 4;
+
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"\nCписок абитуриентов, имеющих неудовлетворительные оценки:");
             Console.ResetColor();
             foreach (Abiturient abiturient in array)
             {
-                if (abiturient._minGrade < 4)
+                if (abiturient._minGrade < minGrade)
                     abiturient.PrintInMethods();
             }
         }
@@ -148,17 +159,16 @@ namespace _2
 
             Abiturient other = (Abiturient)obj;
 
-            return _name == other._name &&
-                   _surname == other._surname &&
-                   _patronymic == other._patronymic &&
-                   _phoneNumber == other._phoneNumber &&
-                   _Grades.SequenceEqual(other._Grades);
+            return this._name == other._name &&
+                   this._surname == other._surname &&
+                   this._patronymic == other._patronymic &&
+                   this._phoneNumber == other._phoneNumber &&
+                   this._Grades.SequenceEqual(other._Grades);
         }
         public override int GetHashCode()
-        {
-            // надо ли самому делать хэши
+        { 
             Console.WriteLine("hash code");
-            return base.GetHashCode();
+            return HashCode.Combine(_surname, _patronymic);
         }
         public override string ToString()
         {
@@ -200,7 +210,10 @@ namespace _2
 
 
             // ______________ Cписок абитуриентов, имеющих неудовлетворительные оценки ______________
-            Abiturient.UnsatisfactoryGrades(allAbiturients);
+            int minGrade;
+            Abiturient.UnsatisfactoryGrades(allAbiturients, out minGrade);
+
+            Console.WriteLine($"Минимальная оценка: {minGrade}");
 
 
             // ______________ Список абтуриентов с баллом выше заданного ______________
