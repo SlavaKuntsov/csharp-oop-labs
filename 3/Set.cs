@@ -17,7 +17,7 @@ namespace _3
 
 
         // ______________ Поля ______________
-        private HashSet<T> allItems;
+        private readonly HashSet<T> allItems;
 
 
         // ______________ Конструкторы ______________
@@ -154,7 +154,7 @@ namespace _3
                 this._organizationName = name;
 
                 Console.WriteLine("Организация: ");
-                Console.WriteLine($"    id: {_id}, Название: {_organizationName}");
+                Console.WriteLine($"    id: {this._id}, Название: {this._organizationName}");
 
 
             }
@@ -172,7 +172,7 @@ namespace _3
                 this._department = department;
 
                 Console.WriteLine("Разработчик: ");
-                Console.WriteLine($"    id: {_id}, ФИО: {_developerName}, Отдел: {_department}");
+                Console.WriteLine($"    id: {this._id}, ФИО: {this._developerName}, Отдел: {this._department}");
             }
         }
     }

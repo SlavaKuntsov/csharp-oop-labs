@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Xml.Linq;
 
+using static _4.Interface;
+
 namespace _4
 {
     //  Иерархия
@@ -22,36 +24,18 @@ namespace _4
 
 
 
-
-    // ______________ 1) Интерфейсы ______________
-    public interface ITech
-    {
-        string Name { get; set; }
-        decimal Price { get; set; }
-        string ToString();
-    }
-    // ______________ 4) Одноименные интерфкйс Clone  ______________
-    public interface IClone
-    {
-        string Clone();
-    }
-
-
     // ______________ 2) Абстрактный класс ______________
-    public abstract class Products
+    public abstract class Products : ITech
     {
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-
-        public override string? ToString()
+        public override string ToString()
         {
-            return base.ToString();
+            return $"Product: {Name}, Price: {Price}\n";
         }
     }
     // ______________ 1) Классы ______________
-    public class Device : Products, ITech // может тоже abstract class ????????
+    public class Device : Products, ITech
     {
-        public string Manufacturer { get; set; } // производитель
+        public string? Manufacturer { get; set; } // производитель
 
         // ______________ Переопределение методов от Object ______________
         public override bool Equals(object? obj)
@@ -66,7 +50,7 @@ namespace _4
         }
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}";
+            return $"Device: {Name}, Price: {Price}, Manufacturer: {Manufacturer}";
         }
 
         // заменнем методом ToString() по заданию 6)
@@ -83,27 +67,27 @@ namespace _4
 
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, IsColor: {IsColor}, PrintSpped: {PrintSpeed}";
+            return $"PrinterDevice: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, IsColor: {IsColor}, PrintSpped: {PrintSpeed}";
         }
     }
-    public class Scanner : Device, ITech
+    public sealed class Scanner : Device, ITech
     {
         public int ScanResolution { get; set; }
 
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, ScanResolution: {ScanResolution}";
+            return $"Scanner: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, ScanResolution: {ScanResolution}";
         }
     }
     public class Computer : Device, ITech
     {
-        public string Processor { get; set; }
-        public string GraphicsCard { get; set; }
+        public string? Processor { get; set; }
+        public string? GraphicsCard { get; set; }
 
         // ______________ 3) Запрет от sealed на переопределение ______________
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Processor: {Processor}, GraphicsCard: {GraphicsCard}";
+            return $"Computer: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Processor: {Processor}, GraphicsCard: {GraphicsCard}";
         }
     }
     public class Tablet : Device, ITech
@@ -112,7 +96,7 @@ namespace _4
 
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Screen Size: {ScreenSize}";
+            return $"Tablet: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Screen Size: {ScreenSize}";
         }
     }
 
@@ -146,15 +130,9 @@ namespace _4
 
     class InheritanceClone : ClassCloneAbstact, IClone
     {
-        public override string Clone()
-        {
-            return "ClassClone void";
-        }
+        public override string Clone() => "ClassClone void";
 
-        string IClone.Clone()
-        {
-            return "IClone void";
-        }
+        string IClone.Clone() => "IClone void";
     }
 
 
@@ -166,50 +144,42 @@ namespace _4
             Device prod = new Device { Name = "prod", Price = 100, Manufacturer = "Китай" };
             Device prod2 = new Device { Name = "prod2", Price = 1002 };
             Device prod3 = new Device { Name = "prod2", Price = 1002 };
-
             Console.WriteLine(prod.ToString());
             Console.WriteLine(prod2.ToString());
 
-            Console.WriteLine(prod3.Equals(prod2));
 
-            Console.WriteLine("\n______________ 2 ______________\n");
+            Console.Write("\nEquals: ");
+            Console.WriteLine(prod3.Equals(prod2));
+            Console.WriteLine();
+
 
             Tablet tablet = new Tablet { Name = "tablet", Price = 89, Manufacturer = "Беларусь", ScreenSize = 1920 };
-            //Console.WriteLine(tablet.GetInfo());
-
-            Console.WriteLine("\n______________ 3 ______________\n");
+            Console.WriteLine(tablet.ToString());
 
             Computer comp = new Computer { Name = "comp", Price = 89, Manufacturer = "Беларусь", Processor = "amd", GraphicsCard = "1650" };
             Laptop laptop = new Laptop { Name = "laptop" };
-
             Console.WriteLine(comp.ToString());
             Console.WriteLine(laptop.ToString());
 
-            Console.WriteLine("\n______________ 4 ______________\n");
 
+
+            Console.WriteLine("\nSimilar Clone:");
             InheritanceClone clone = new();
-
             Console.WriteLine(clone.Clone());
             Console.WriteLine( ((IClone)clone).Clone() ); //       ( ( IInterface )object ).Void()
+            Console.WriteLine();
 
-            Console.WriteLine("\n______________ 5 ______________\n");
+
 
             PrinterDevice printer = new PrinterDevice { Name = "printer", Price = 89, Manufacturer = "Беларусь", IsColor = true, PrintSpeed = 100 };
-
             Console.WriteLine(printer.ToString());
 
             Scanner scanner = new Scanner { Name = "scanner", Price = 89, Manufacturer = "Беларусь", ScanResolution = 1000 };
-
             Console.WriteLine(scanner.ToString());
-
-            Console.WriteLine(comp.ToString());
-
-            Console.WriteLine("\n______________ 7 ______________\n");
-
             Printer.IAmPrinting(scanner);
 
 
-            Console.WriteLine("\narray of object with IAmPrinting():");
+            Console.WriteLine("\nArray of object with IAmPrinting():");
             Products[] allProduts = new Products[]
             {
                 new Device{Name = "all device", Price = 1000, Manufacturer = "china"},
@@ -223,6 +193,29 @@ namespace _4
                 Console.Write("    ");
                 Printer.IAmPrinting(item);
             }
+
+            //Products product1 = new Computer { Name = "product1", Price = 1200, Manufacturer = "Беларусь", Processor = "intel", GraphicsCard = "3050" };
+            Products product1 = new Computer { Name = "product1", Price = 1200, Manufacturer = "Беларусь", Processor = "intel", GraphicsCard = "3050" };
+            Products product2 = new Tablet { Name = "product2", Price = 700, Manufacturer = "Беларусь", ScreenSize = 1920 };
+            Products product3 = new Laptop();
+
+            Console.WriteLine();
+            if(product1 is Computer)
+            {
+                Computer computerIs = product1 as Computer;
+                Console.WriteLine(computerIs.ToString()); 
+            }
+            if(product2 is Tablet)
+            {
+                Tablet tabletIs = product2 as Tablet;
+                Console.WriteLine(tabletIs.ToString()); 
+            }
+            if(product3 is Laptop)
+            {
+                Laptop laptopIs = product3 as Laptop;
+                Console.WriteLine(laptopIs.ToString()); 
+            }
+
         }
     }
 }

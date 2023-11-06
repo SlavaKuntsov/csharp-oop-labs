@@ -70,6 +70,8 @@
 
 
             Set<string> stringSet = new(new string[] { "chai", "tea", "iLoveYou", "1265465465", "sd" });
+
+            Console.Write("String множество: ");
             stringSet.Print();  
 
             Set<string>.FindShortestWord(stringSet);
