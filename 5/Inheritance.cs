@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using System.Xml.Linq;
+using static _5.Interface;
 
 namespace _5
 {
     // ______________ Перечесление ______________
     public enum ProductCategorty
     {
+        Products,
         Device,
         PrinterDevice,
         Scanner,
@@ -23,42 +25,23 @@ namespace _5
         public ProductCategorty Category { get; set; }
     }
 
-
-    // ______________ 1) Интерфейсы ______________
-    public interface ITech
-    {
-        string Name { get; set; }
-        decimal Price { get; set; }
-        string ToString();
-    }
-
-
-    // ______________ 4) Одноименные интерфкйс Clone  ______________
-    public interface IClone
-    {
-        string Clone();
-    }
-
-
     // ______________ 2) Абстрактный класс ______________
     public abstract class Products
     {
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-
+        public string? Name { get; set; }
+        public decimal? Price { get; set; }
         public ProductCategorty Category { get; set; }
 
-        public override string? ToString()
+        public override string ToString()
         {
-            return base.ToString();
+            return $"Product: {Name}, Price: {Price}\n";
         }
     }
     // ______________ 1) Классы ______________
-    public class Device : Products, ITech // может тоже abstract class ????????
+    public class Device : Products, ITech 
     {
         public string? Manufacturer { get; set; } // производитель
 
-        // ______________ Переопределение методов от Object ______________
         public override bool Equals(object? obj)
         {
             return obj is Products products &&
@@ -71,15 +54,8 @@ namespace _5
         }
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Category: {Category}";
+            return $"Device: {Name}, Price: {Price}, Manufacturer: {Manufacturer}";
         }
-
-        // заменнем методом ToString() по заданию 6)
-        //______________ Виртуальный метод ______________
-        //public virtual string GetInfo() // перегрузили виртуальный метод
-        //{
-        //    return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}";
-        //}
     }
     public class PrinterDevice : Device, ITech
     {
@@ -88,7 +64,7 @@ namespace _5
 
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, IsColor: {IsColor}, PrintSpped: {PrintSpeed}, Category: {Category}";
+            return $"PrinterDevice: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, IsColor: {IsColor}, PrintSpped: {PrintSpeed}";
         }
     }
     public class Scanner : Device, ITech
@@ -97,18 +73,17 @@ namespace _5
 
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, ScanResolution: {ScanResolution}, Category: {Category}";
+            return $"Scanner: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, ScanResolution: {ScanResolution}";
         }
     }
     public class Computer : Device, ITech
     {
-        public string Processor { get; set; }
-        public string GraphicsCard { get; set; }
+        public string? Processor { get; set; }
+        public string? GraphicsCard { get; set; }
 
-        // ______________ 3) Запрет от sealed на переопределение ______________
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Processor: {Processor}, GraphicsCard: {GraphicsCard}, Category: {Category}";
+            return $"Computer: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Processor: {Processor}, GraphicsCard: {GraphicsCard}";
         }
     }
     public class Tablet : Device, ITech
@@ -117,7 +92,7 @@ namespace _5
 
         public override string ToString()
         {
-            return $"Product: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Screen Size: {ScreenSize}, Category: {Category}";
+            return $"Tablet: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Screen Size: {ScreenSize}";
         }
     }
 
@@ -125,10 +100,10 @@ namespace _5
     // ______________ 3) Запрет от sealed на переопределение ______________
     public class Laptop : Computer, ITech
     {
-        //public override string GetInfo()
-        //{
-        //    return "123";
-        //}
+        public override string ToString()
+        {
+            return $"Laptop: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Processor: {Processor}, GraphicsCard: {GraphicsCard}";
+        }
     }
 
 
@@ -137,7 +112,7 @@ namespace _5
     {
         public static void IAmPrinting(Products products)
         {
-            Console.WriteLine("Origin Printer:");
+            Console.WriteLine("Original Printer:");
             Console.WriteLine("    " + products.ToString() + "\n");
         }
     }
@@ -168,7 +143,6 @@ namespace _5
     {
         static void Main()
         {
-            Console.WriteLine("\n______________ 1 ______________\n");
 
             Device dev = new() { Name = "device", Price = 10000, Manufacturer = "China", Category = ProductCategorty.Device };
 
@@ -178,9 +152,8 @@ namespace _5
 
             Printer.IAmPrintingPartial(computer);
 
-            Console.WriteLine("\n______________ 3 ______________\n");
 
-            Laboratory lab = new Laboratory();
+            Laboratory lab = new();
 
             lab.Add(new Device { Name = "device", Price = 1, Manufacturer = "Chinaaaaaaa", Category = ProductCategorty.Device });
             lab.Add(new Device { Name = "device", Price = 1000, Manufacturer = "Chinaaaaaaa", Category = ProductCategorty.Device });
@@ -193,17 +166,12 @@ namespace _5
 
             Console.WriteLine("\n-----------");
 
-            //lab.SortByPrice();
-
-
-            Console.WriteLine("\n-----------");
-
             lab.CategoryCount();
 
 
-            Console.WriteLine("-----------\nnew list:");
+            Console.WriteLine("-----------\n\nnew list:");
 
-            lab.NewListValues = new List<Products>() { new Device { Name = "new device", Price = 999, Manufacturer = "рб", Category = ProductCategorty.Device } };
+            lab.NewList = new List<Products>() { new Device { Name = "new device", Price = 999, Manufacturer = "рб", Category = ProductCategorty.Device } };
             lab.Print();
 
             Console.WriteLine("\n______________ controller ______________");

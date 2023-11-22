@@ -15,28 +15,33 @@ namespace _5
         }
     }
 
-    public partial class Laboratory // ???????????? get и set методы конструктора
+    public partial class Laboratory
     {
-        private List<Products> allProducts;
+        private List<Products> _allProducts;
+        public List<Products> AllProducts
+        {
+            get { return _allProducts; }
+            set { _allProducts = value; }
+        }
         // ______________ Конструктор ______________
         public Laboratory()
         {
-            allProducts = new List<Products>();
+            AllProducts = new List<Products>();
         }
 
         // ______________ Функции ______________
         public void Add(Products products)
         {
-            allProducts.Add(products);
+            AllProducts.Add(products);
         }
         public void Remove(Products products)
         {
-            allProducts.Remove(products);
+            AllProducts.Remove(products);
         }
 
         public void Print() // было SortByPrice, стало Print
         {
-            List<Products> sortAllProducts = new(allProducts.OrderByDescending(p => p.Price)) ;
+            List<Products> sortAllProducts = new(AllProducts.OrderByDescending(p => p.Price)) ;
             //Console.Write("sort by price: \n");
             foreach (Products tech in sortAllProducts)
             {
@@ -44,12 +49,6 @@ namespace _5
                 //Console.WriteLine("    " + tech);
             }
         }
-        //public void Print() //изначальный Print
-        //{
-        //    foreach (Products product in allProducts)
-        //    {
-        //        Console.WriteLine(product.ToString());
-        //    }
         //}
         public void CategoryCount()
         {
@@ -57,7 +56,7 @@ namespace _5
 
             Dictionary<ProductCategorty, int> categoryCount = new();
 
-            foreach (Products product in allProducts)
+            foreach (Products product in AllProducts)
             {
                 allCount++;
                 if(categoryCount.ContainsKey(product.Category))
@@ -75,10 +74,10 @@ namespace _5
             }
         }
 
-        public List<Products> NewListValues
+        public List<Products> NewList
         {
-            get { return allProducts; }
-            set { allProducts = value; }
+            get { return AllProducts; }
+            set { AllProducts = value; }
         }
 
     }
@@ -108,6 +107,7 @@ namespace _5
             //lab.SortByPrice();
             lab.Print();
         }
+        
         public void CategoryCount()
         {
             lab.CategoryCount();   
