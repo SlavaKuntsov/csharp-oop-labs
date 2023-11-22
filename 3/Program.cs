@@ -77,7 +77,7 @@
             Set<string>.FindShortestWord(stringSet);
 
 
-            Console.WriteLine("\n-----------------\n");
+            Console.WriteLine("\n-----------------");
 
 
             Set<object>.Production _ = new(1, "myCompany");

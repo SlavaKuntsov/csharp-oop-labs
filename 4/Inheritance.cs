@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Drawing;
-using System.Xml.Linq;
-
-using static _4.Interface;
+﻿using static _4.Interface;
 
 namespace _4
 {
@@ -27,13 +23,15 @@ namespace _4
     // ______________ 2) Абстрактный класс ______________
     public abstract class Products : ITech
     {
+        public string? Name { get; set; }
+        public decimal? Price { get; set; }
         public override string ToString()
         {
             return $"Product: {Name}, Price: {Price}\n";
         }
     }
     // ______________ 1) Классы ______________
-    public class Device : Products, ITech
+    public class Device : Products
     {
         public string? Manufacturer { get; set; } // производитель
 
@@ -84,7 +82,6 @@ namespace _4
         public string? Processor { get; set; }
         public string? GraphicsCard { get; set; }
 
-        // ______________ 3) Запрет от sealed на переопределение ______________
         public override string ToString()
         {
             return $"Computer: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Processor: {Processor}, GraphicsCard: {GraphicsCard}";
@@ -104,10 +101,10 @@ namespace _4
     // ______________ 3) Запрет от sealed на переопределение ______________
     public class Laptop : Computer, ITech
     {
-        //public override string GetInfo()
-        //{
-        //    return "123";
-        //}
+        public override string ToString()
+        {
+            return $"Laptop: {Name}, Price: {Price}, Manufacturer: {Manufacturer}, Processor: {Processor}, GraphicsCard: {GraphicsCard}";
+        }
     }
 
 
@@ -131,91 +128,94 @@ namespace _4
     class InheritanceClone : ClassCloneAbstact, IClone
     {
         public override string Clone() => "ClassClone void";
+        //public override string Clone()
+        //{
+        //    Console.WriteLine("ClassClone void");
+        //}
 
         string IClone.Clone() => "IClone void";
     }
 
 
     // ______________ Функции ______________
-    class Inheritance
-    {
-        static void Main()
-        {
-            Device prod = new Device { Name = "prod", Price = 100, Manufacturer = "Китай" };
-            Device prod2 = new Device { Name = "prod2", Price = 1002 };
-            Device prod3 = new Device { Name = "prod2", Price = 1002 };
-            Console.WriteLine(prod.ToString());
-            Console.WriteLine(prod2.ToString());
+    //class Inheritance
+    //{
+    //    static void Main()
+    //    {
+    //        Device prod = new Device { Name = "prod", Price = 100, Manufacturer = "Китай" };
+    //        Device prod2 = new Device { Name = "prod2", Price = 1002 };
+    //        Device prod3 = new Device { Name = "prod2", Price = 1002 };
+    //        Console.WriteLine(prod.ToString());
+    //        Console.WriteLine(prod2.ToString());
 
 
-            Console.Write("\nEquals: ");
-            Console.WriteLine(prod3.Equals(prod2));
-            Console.WriteLine();
+    //        Console.Write("\nEquals: ");
+    //        Console.WriteLine(prod3.Equals(prod2));
+    //        Console.WriteLine();
 
 
-            Tablet tablet = new Tablet { Name = "tablet", Price = 89, Manufacturer = "Беларусь", ScreenSize = 1920 };
-            Console.WriteLine(tablet.ToString());
+    //        Tablet tablet = new Tablet { Name = "tablet", Price = 89, Manufacturer = "Беларусь", ScreenSize = 1920 };
+    //        Console.WriteLine(tablet.ToString());
 
-            Computer comp = new Computer { Name = "comp", Price = 89, Manufacturer = "Беларусь", Processor = "amd", GraphicsCard = "1650" };
-            Laptop laptop = new Laptop { Name = "laptop" };
-            Console.WriteLine(comp.ToString());
-            Console.WriteLine(laptop.ToString());
-
-
-
-            Console.WriteLine("\nSimilar Clone:");
-            InheritanceClone clone = new();
-            Console.WriteLine(clone.Clone());
-            Console.WriteLine( ((IClone)clone).Clone() ); //       ( ( IInterface )object ).Void()
-            Console.WriteLine();
+    //        Computer comp = new Computer { Name = "comp", Price = 89, Manufacturer = "Беларусь", Processor = "amd", GraphicsCard = "1650" };
+    //        Laptop laptop = new Laptop { Name = "laptop" };
+    //        Console.WriteLine(comp.ToString());
+    //        Console.WriteLine(laptop.ToString());
 
 
 
-            PrinterDevice printer = new PrinterDevice { Name = "printer", Price = 89, Manufacturer = "Беларусь", IsColor = true, PrintSpeed = 100 };
-            Console.WriteLine(printer.ToString());
+    //        Console.WriteLine("\nSimilar 'Clone':");
+    //        InheritanceClone clone = new();
+    //        Console.WriteLine(clone.Clone());
+    //        Console.WriteLine(((IClone)clone).Clone()); //       ( ( IInterface )object ).Void()
+    //        Console.WriteLine();
 
-            Scanner scanner = new Scanner { Name = "scanner", Price = 89, Manufacturer = "Беларусь", ScanResolution = 1000 };
-            Console.WriteLine(scanner.ToString());
-            Printer.IAmPrinting(scanner);
 
 
-            Console.WriteLine("\nArray of object with IAmPrinting():");
-            Products[] allProduts = new Products[]
-            {
-                new Device{Name = "all device", Price = 1000, Manufacturer = "china"},
-                new PrinterDevice{ Name = "printer", Price = 89, Manufacturer = "Беларусь", IsColor = true, PrintSpeed = 100 },
-                new Scanner { Name = "scanner", Price = 89, Manufacturer = "Беларусь", ScanResolution = 1000 },
-                new Computer { Name = "comp", Price = 89, Manufacturer = "Беларусь", Processor = "amd", GraphicsCard = "1650" },
-                new Tablet { Name = "tablet", Price = 89, Manufacturer = "Беларусь", ScreenSize = 1920 }
-            };
-            foreach(var item in allProduts)
-            {
-                Console.Write("    ");
-                Printer.IAmPrinting(item);
-            }
+    //        PrinterDevice printer = new PrinterDevice { Name = "printer", Price = 89, Manufacturer = "Беларусь", IsColor = true, PrintSpeed = 100 };
+    //        Console.WriteLine(printer.ToString());
 
-            //Products product1 = new Computer { Name = "product1", Price = 1200, Manufacturer = "Беларусь", Processor = "intel", GraphicsCard = "3050" };
-            Products product1 = new Computer { Name = "product1", Price = 1200, Manufacturer = "Беларусь", Processor = "intel", GraphicsCard = "3050" };
-            Products product2 = new Tablet { Name = "product2", Price = 700, Manufacturer = "Беларусь", ScreenSize = 1920 };
-            Products product3 = new Laptop();
+    //        Scanner scanner = new Scanner { Name = "scanner", Price = 89, Manufacturer = "Беларусь", ScanResolution = 1000 };
+    //        Console.WriteLine(scanner.ToString());
+    //        Printer.IAmPrinting(scanner);
 
-            Console.WriteLine();
-            if(product1 is Computer)
-            {
-                Computer computerIs = product1 as Computer;
-                Console.WriteLine(computerIs.ToString()); 
-            }
-            if(product2 is Tablet)
-            {
-                Tablet tabletIs = product2 as Tablet;
-                Console.WriteLine(tabletIs.ToString()); 
-            }
-            if(product3 is Laptop)
-            {
-                Laptop laptopIs = product3 as Laptop;
-                Console.WriteLine(laptopIs.ToString()); 
-            }
 
-        }
-    }
+    //        Console.WriteLine("\nArray of object with IAmPrinting():");
+    //        Products[] allProduts = new Products[]
+    //        {
+    //            new Device{Name = "all device", Price = 1000, Manufacturer = "china"},
+    //            new PrinterDevice{ Name = "printer", Price = 89, Manufacturer = "Беларусь", IsColor = true, PrintSpeed = 100 },
+    //            new Scanner { Name = "scanner", Price = 89, Manufacturer = "Беларусь", ScanResolution = 1000 },
+    //            new Computer { Name = "comp", Price = 89, Manufacturer = "Беларусь", Processor = "amd", GraphicsCard = "1650" },
+    //            new Tablet { Name = "tablet", Price = 89, Manufacturer = "Беларусь", ScreenSize = 1920 }
+    //        };
+    //        foreach (var item in allProduts)
+    //        {
+    //            Console.Write("    ");
+    //            Printer.IAmPrinting(item);
+    //        }
+
+    //        Products product1 = new Computer { Name = "product1", Price = 1200, Manufacturer = "Беларусь", Processor = "intel", GraphicsCard = "3050" };
+    //        Products product2 = new Tablet { Name = "product2", Price = 700, Manufacturer = "Беларусь", ScreenSize = 1920 };
+    //        Products product3 = new Scanner { Name = "scanner", Price = 89, Manufacturer = "Беларусь", ScanResolution = 1000 };
+
+    //        Console.WriteLine();
+    //        if (product1 is Computer)
+    //        {
+    //            Computer? computerIs = product1 as Computer;
+    //            Console.WriteLine(computerIs.ToString());
+    //        }
+    //        if (product2 is Tablet)
+    //        {
+    //            Tablet? tabletIs = product2 as Tablet;
+    //            Console.WriteLine(tabletIs.ToString());
+    //        }
+    //        if (product3 is Scanner)
+    //        {
+    //            Scanner? scannerIs = product3 as Scanner;
+    //            Console.WriteLine(scannerIs.ToString());
+    //        }
+
+    //    }
+    //}
 }

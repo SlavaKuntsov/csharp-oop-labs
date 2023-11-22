@@ -15,7 +15,7 @@ namespace _4
             decimal? Price { get; set; }
             virtual string ToString()
             {
-                return "Product is n";
+                return "Product is none";
             }
         }
         // ______________ 4) Одноименные интерфкйс Clone  ______________

@@ -7,6 +7,7 @@ namespace _3
         // ______________ IEnumerable ______________
         public IEnumerator<T> GetEnumerator()
         {
+
             return allItems.GetEnumerator();
         }
 
@@ -142,7 +143,7 @@ namespace _3
         }
 
 
-        // ______________ Вложенные классы ______________ ????? как создать вложенный обьект
+        // ______________ Вложенные классы ______________
         public class Production
         {
             private int _id { get; set; }
